@@ -1,0 +1,16 @@
+disruption_id,route_id,disruption_type,severity,status,start_date,end_date,impact_delay_days,impact_cost,description
+D-001,R-027,Weather,High,Active,2026-05-25,2026-05-30,2,8000,Heavy rainfall on the West-South highway corridor causing slow movement and diversion risk.
+D-002,R-012,Weather,High,Active,2026-05-25,2026-05-29,3,10000,Heavy rainfall and localized flooding affecting the West-South road corridor.
+D-003,R-042,Weather,High,Active,2026-05-25,2026-05-30,2,9000,Continuous rainfall causing congestion on the West-South road route.
+D-004,R-017,Rail Delay,Medium,Active,2026-05-24,2026-05-28,1,4500,Rail congestion on the North-South corridor causing moderate shipment delay.
+D-005,R-054,Infrastructure Maintenance,Medium,Active,2026-05-26,2026-05-31,2,6000,Scheduled track maintenance on the North-East rail corridor causing slower transit.
+D-006,R-020,Road Closure,Medium,Active,2026-05-26,2026-05-29,1,5000,Temporary road closure on the East-South route requiring partial diversion.
+D-007,R-048,Capacity Constraint,High,Active,2026-05-25,2026-05-29,2,12000,Limited air cargo capacity on the North-South lane due to high shipment backlog.
+D-008,R-002,Rail Delay,Medium,Resolved,2026-05-18,2026-05-22,0,0,Previous rail delay on the South-West route has been resolved.
+D-009,R-033,Capacity Constraint,Low,Resolved,2026-05-20,2026-05-21,0,0,Temporary air cargo capacity constraint in the East region has been resolved.
+D-010,R-039,Capacity Constraint,Low,Resolved,2026-05-19,2026-05-21,0,0,Short-duration air freight capacity constraint in the West region has been resolved.
+D-011,R-026,Rail Delay,Medium,Resolved,2026-05-16,2026-05-20,0,0,Earlier rail congestion on the South-East corridor is no longer active.
+D-012,R-005,Rail Delay,Medium,Resolved,2026-05-17,2026-05-23,0,0,Previous rail congestion on the South-North corridor has been cleared.
+D-013,R-036,Infrastructure Maintenance,Medium,Planned,2026-05-30,2026-06-02,2,6500,Planned rail infrastructure maintenance on the East-North route may increase delivery time.
+D-014,R-040,Road Closure,Medium,Planned,2026-05-31,2026-06-03,2,7000,Planned roadwork on the West-North route may require alternate routing.
+D-015,R-015,Air Traffic Delay,High,Planned,2026-05-30,2026-06-01,2,15000,Expected air traffic congestion on the West-East lane may increase cargo handling cost.

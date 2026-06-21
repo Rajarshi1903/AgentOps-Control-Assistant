@@ -1,0 +1,363 @@
+metadata:
+  version: "1.0"
+  project_name: "AgentOps Control Tower for Autonomous Supply Chain Agents"
+  currency: "INR"
+  description: "Governance, risk scoring, approval, and audit rules for autonomous supply chain agents."
+  last_updated: "2026-06-01"
+  owner: "AgentOps Control Tower MVP"
+
+decision_priority:
+  - Block
+  - Escalate
+  - Allow
+
+policies:
+  - policy_id: "POL-001"
+    policy_name: "High Value Procurement Approval"
+    category: "Financial Risk"
+    description: "Procurement recommendations above INR 50000 require human approval."
+    condition:
+      field: "procurement_value"
+      operator: ">"
+      value: 50000
+    action: "Escalate"
+    severity: "High"
+    applies_to:
+      - "procurement_agent"
+      - "coordinator_agent"
+    message: "Procurement value exceeds INR 50000 and requires human approval."
+
+  - policy_id: "POL-002"
+    policy_name: "Unapproved Vendor Block"
+    category: "Vendor Compliance Risk"
+    description: "Unapproved vendors cannot be selected for procurement."
+    condition:
+      field: "is_approved"
+      operator: "=="
+      value: "No"
+    action: "Block"
+    severity: "Critical"
+    applies_to:
+      - "procurement_agent"
+    message: "Selected supplier is not approved. Procurement recommendation must be blocked."
+
+  - policy_id: "POL-003"
+    policy_name: "Missing Source Traceability Block"
+    category: "Traceability Risk"
+    description: "Final recommendations must cite source data used by the agents."
+    condition:
+      field: "source_citation_missing"
+      operator: "=="
+      value: true
+    action: "Block"
+    severity: "High"
+    applies_to:
+      - "coordinator_agent"
+      - "forecasting_agent"
+      - "inventory_agent"
+      - "procurement_agent"
+      - "logistics_agent"
+    message: "Source citation is missing. Recommendation cannot proceed without traceability."
+
+  - policy_id: "POL-004"
+    policy_name: "External Communication Approval"
+    category: "External Action Risk"
+    description: "Supplier emails, vendor API calls, or external business actions require approval."
+    condition:
+      field: "external_communication_attempted"
+      operator: "=="
+      value: true
+    action: "Escalate"
+    severity: "High"
+    applies_to:
+      - "coordinator_agent"
+      - "procurement_agent"
+      - "logistics_agent"
+    message: "External communication or external business action attempted. Human approval is required."
+
+  - policy_id: "POL-005"
+    policy_name: "Restricted Data Access Block"
+    category: "Data Access Risk"
+    description: "Agents must not access restricted HR, payroll, employee, or customer PII datasets."
+    condition:
+      field: "restricted_data_accessed"
+      operator: "=="
+      value: true
+    action: "Block"
+    severity: "Critical"
+    applies_to:
+      - "coordinator_agent"
+      - "forecasting_agent"
+      - "inventory_agent"
+      - "procurement_agent"
+      - "logistics_agent"
+      - "policy_engine"
+      - "risk_scoring_engine"
+      - "audit_logger"
+      - "dashboard_agent"
+      - "experimental_agent"
+    message: "Restricted dataset access detected. Action must be blocked."
+
+  - policy_id: "POL-006"
+    policy_name: "High Route Disruption Review"
+    category: "Operational Risk"
+    description: "Routes with active High or Critical disruptions require human review."
+    condition:
+      field: "route_disruption_severity"
+      operator: "in"
+      value:
+        - "High"
+        - "Critical"
+    additional_condition:
+      field: "route_disruption_status"
+      operator: "=="
+      value: "Active"
+    action: "Escalate"
+    severity: "High"
+    applies_to:
+      - "logistics_agent"
+      - "coordinator_agent"
+    message: "Selected route has an active High/Critical disruption. Human review is required."
+
+  - policy_id: "POL-007"
+    policy_name: "Suspended Agent Block"
+    category: "Agent Status Risk"
+    description: "Inactive or suspended agents cannot execute actions or access tools."
+    condition:
+      field: "agent_status"
+      operator: "!="
+      value: "Active"
+    action: "Block"
+    severity: "Critical"
+    applies_to:
+      - "coordinator_agent"
+      - "forecasting_agent"
+      - "inventory_agent"
+      - "procurement_agent"
+      - "logistics_agent"
+      - "policy_engine"
+      - "risk_scoring_engine"
+      - "audit_logger"
+      - "dashboard_agent"
+      - "experimental_agent"
+    message: "Agent is not active. Action must be blocked."
+
+  - policy_id: "POL-008"
+    policy_name: "Unauthorized Tool Use Block"
+    category: "Tool Governance Risk"
+    description: "Agents cannot use tools outside their allowed tool list."
+    condition:
+      field: "unauthorized_tool_used"
+      operator: "=="
+      value: true
+    action: "Block"
+    severity: "High"
+    applies_to:
+      - "coordinator_agent"
+      - "forecasting_agent"
+      - "inventory_agent"
+      - "procurement_agent"
+      - "logistics_agent"
+      - "policy_engine"
+      - "risk_scoring_engine"
+      - "audit_logger"
+      - "dashboard_agent"
+      - "experimental_agent"
+    message: "Unauthorized tool usage detected. Action must be blocked."
+
+risk_scoring:
+  base_score: 10
+  max_score: 100
+  score_cap_rule: "final_risk_score = min(calculated_score, 100)"
+
+  factors:
+    high_value_procurement:
+      category: "Financial Risk"
+      points: 30
+      condition:
+        field: "procurement_value"
+        operator: ">"
+        value: 50000
+      description: "Adds risk when procurement value exceeds INR 50000."
+
+    unapproved_vendor:
+      category: "Vendor Compliance Risk"
+      points: 40
+      condition:
+        field: "is_approved"
+        operator: "=="
+        value: "No"
+      description: "Adds risk when selected supplier is not approved."
+
+    external_communication:
+      category: "External Action Risk"
+      points: 25
+      condition:
+        field: "external_communication_attempted"
+        operator: "=="
+        value: true
+      description: "Adds risk when an agent attempts supplier email, vendor API call, or external business action."
+
+    restricted_data_access:
+      category: "Data Access Risk"
+      points: 30
+      condition:
+        field: "restricted_data_accessed"
+        operator: "=="
+        value: true
+      description: "Adds risk when confidential or restricted data access is detected."
+
+    missing_source_citation:
+      category: "Traceability Risk"
+      points: 20
+      condition:
+        field: "source_citation_missing"
+        operator: "=="
+        value: true
+      description: "Adds risk when source traceability is missing from recommendation."
+
+    route_disruption:
+      category: "Operational Risk"
+      points: 25
+      condition:
+        field: "route_disruption_exists"
+        operator: "=="
+        value: true
+      description: "Adds risk when selected route has a disruption record."
+
+    low_forecast_confidence:
+      category: "Model Confidence Risk"
+      points: 20
+      condition:
+        field: "forecast_confidence"
+        operator: "<"
+        value: 0.70
+      description: "Adds risk when forecast confidence is below 0.70."
+
+risk_levels:
+  low:
+    label: "Low"
+    min: 0
+    max: 30
+
+  medium:
+    label: "Medium"
+    min: 31
+    max: 60
+
+  high:
+    label: "High"
+    min: 61
+    max: 80
+
+  critical:
+    label: "Critical"
+    min: 81
+    max: 100
+
+decision_rules:
+  default_decision: "Allow"
+  policy_decision_priority:
+    - "Block"
+    - "Escalate"
+    - "Allow"
+
+  risk_based_escalation:
+    enabled: true
+    escalate_if_risk_level:
+      - "High"
+      - "Critical"
+
+  final_decision_logic:
+    - "If any triggered policy action is Block, final decision is Block."
+    - "Else if any triggered policy action is Escalate, final decision is Escalate."
+    - "Else if risk_based_escalation is enabled and risk level is High or Critical, final decision is Escalate."
+    - "Else final decision is Allow."
+
+  approval_logic:
+    human_approval_required_for:
+      - "Escalate"
+    auto_block_for:
+      - "Block"
+    auto_allow_for:
+      - "Allow"
+
+evaluation_context_schema:
+  required_fields:
+    - "agent_id"
+    - "agent_status"
+    - "dataset_accessed"
+    - "tool_called"
+    - "procurement_value"
+    - "is_approved"
+    - "source_citation_missing"
+    - "external_communication_attempted"
+    - "restricted_data_accessed"
+    - "route_disruption_exists"
+    - "route_disruption_severity"
+    - "route_disruption_status"
+    - "forecast_confidence"
+    - "unauthorized_tool_used"
+
+  field_defaults:
+    procurement_value: 0
+    is_approved: "Yes"
+    source_citation_missing: false
+    external_communication_attempted: false
+    restricted_data_accessed: false
+    route_disruption_exists: false
+    route_disruption_severity: "None"
+    route_disruption_status: "None"
+    forecast_confidence: 1.0
+    unauthorized_tool_used: false
+    agent_status: "Active"
+
+audit_requirements:
+  log_all_agent_actions: true
+  log_policy_evaluations: true
+  log_risk_scores: true
+  log_tool_calls: true
+  log_dataset_access: true
+  log_human_approval_decisions: true
+  log_final_decision: true
+  log_source_references: true
+  log_timestamp: true
+
+audit_event_fields:
+  - "event_id"
+  - "timestamp"
+  - "agent_id"
+  - "agent_name"
+  - "action_type"
+  - "dataset_accessed"
+  - "tool_called"
+  - "input_summary"
+  - "output_summary"
+  - "triggered_policies"
+  - "policy_decision"
+  - "risk_score"
+  - "risk_level"
+  - "approval_status"
+  - "source_files"
+  - "final_decision"
+
+source_traceability:
+  required_for_final_recommendation: true
+  minimum_source_fields:
+    - "source_files"
+    - "source_record_ids"
+    - "calculation_summary"
+
+external_actions:
+  allow_real_external_execution_in_mvp: false
+  external_action_examples:
+    - "supplier_email"
+    - "vendor_api_call"
+    - "purchase_order_submission"
+    - "external_notification"
+
+governance_notes:
+  - "Policies must be generic and must not be hardcoded to product_id, supplier_id, or route_id."
+  - "Restricted datasets are deny-list labels and do not need to physically exist in the data folder."
+  - "Policy Engine should evaluate structured action context, not raw natural language."
+  - "Risk score supports decision-making but does not replace hard policy actions."

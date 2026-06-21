@@ -1,0 +1,26 @@
+supplier_id,supplier_name,product_id,region,unit_cost,lead_time_days,reliability_score,is_approved,max_capacity,compliance_status
+S-001,Alpha Components Pvt Ltd,P-101,South,1800,5,92,Yes,700,Compliant
+S-002,Beta Industrial Traders,P-101,South,1550,4,68,No,450,Non-Compliant
+S-003,Nova Electronics Supply Co,P-101,West,1950,7,88,Yes,600,Compliant
+S-004,Delta Engineering Supplies,P-102,West,253,4,93,Yes,2655,Compliant
+S-005,Metro Manufacturing Partners,P-102,West,225,4,91,Yes,1795,Compliant
+S-006,Beta Industrial Traders,P-102,West,210,4,66,No,494,Non-Compliant
+S-007,Omega Precision Works,P-103,North,3300,8,90,Yes,350,Compliant
+S-008,Beta Industrial Traders,P-103,East,2600,9,62,No,250,Non-Compliant
+S-009,Trident Mechanical Systems,P-103,West,3500,11,82,Yes,300,Under Review
+S-010,CoreTech Component Works,P-104,East,713,2,97,Yes,4021,Compliant
+S-011,Global Material Source,P-104,South,657,3,89,Yes,4241,Compliant
+S-012,Pioneer Electronics Hub,P-105,West,2300,6,91,Yes,500,Compliant
+S-013,Southern Tech Components,P-105,South,2450,5,87,Yes,450,Compliant
+S-014,Rapid Logistics Suppliers,P-105,East,2050,8,70,No,300,Non-Compliant
+S-015,Vertex Supply Chain Solutions,P-106,East,4652,13,92,Yes,443,Compliant
+S-016,Western Engineering Supply,P-106,South,3657,11,56,No,295,Non-Compliant
+S-017,Orion Electrical Distributors,P-107,West,929,5,86,Yes,2030,Compliant
+S-018,Trident Mechanical Systems,P-107,West,809,5,84,Yes,661,Under Review
+S-019,Sapphire Industrial Traders,P-108,South,1258,12,92,Yes,354,Compliant
+S-020,Eastern Precision Traders,P-108,South,1171,12,95,Yes,333,Compliant
+S-021,Bharat Industrial Supply Co,P-109,North,2524,8,86,Yes,831,Compliant
+S-022,Reliable Components India,P-109,East,2878,5,93,Yes,1012,Compliant
+S-023,Rapid Logistics Suppliers,P-109,East,2328,9,61,No,314,Non-Compliant
+S-024,Nova Electronics Supply Co,P-110,North,85,3,93,Yes,2067,Compliant
+S-025,Prime Motion Systems,P-110,North,84,4,77,Yes,4840,Under Review

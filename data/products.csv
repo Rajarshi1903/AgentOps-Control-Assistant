@@ -1,0 +1,11 @@
+product_id,product_name,category,unit_of_measure,unit_price,criticality,status
+P-101,Smart Sensor Module,Electronics,units,2500,High,Active
+P-102,Industrial Cable,Electrical,meters,300,Medium,Active
+P-103,Control Valve,Mechanical,units,4200,High,Active
+P-104,Packaging Film,Packaging,rolls,900,Low,Active
+P-105,Battery Pack,Electronics,units,3200,High,Active
+P-106,Hydraulic Pump,Mechanical,units,5800,High,Active
+P-107,Thermal Insulation Sheet,Industrial Material,sheets,1200,Medium,Active
+P-108,Precision Bearing,Mechanical,units,1500,Medium,Active
+P-109,LED Display Panel,Electronics,units,3500,Medium,Active
+P-110,Corrugated Box,Packaging,boxes,120,Low,Active
